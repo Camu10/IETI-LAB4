@@ -1,4 +1,7 @@
 import React from 'react';
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 
 export class Todo extends React.Component {
 
@@ -8,11 +11,16 @@ export class Todo extends React.Component {
 
     render() {
         return (
-            <tr>
-                <td>{this.props.text}</td>
-                <td>{this.props.priority}</td>
-                <td>{this.props.dueDate.format('DD-MM-YYYY')}</td>
-            </tr>
+            <Card className="root">
+                <CardContent>
+                    <Typography>{this.props.descripcion}</Typography>
+                    <Typography>{this.props.name}</Typography>
+                    <Typography>{this.props.status}</Typography>
+                    <Typography>
+                        {new Date(this.props.dueDate).toLocaleDateString()}
+                    </Typography>
+                </CardContent>
+            </Card>
         );
     }
 

@@ -1,5 +1,7 @@
 import React from 'react';
-import {Todo} from './Todo'
+import {Todo} from './Todo';
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
 
 export class TodoList extends React.Component {
 
@@ -10,23 +12,18 @@ export class TodoList extends React.Component {
     render() {
         const todoList = this.props.todoList.map((todo, i) => {
             return (
-                <Todo key={i} text={todo.text} priority={todo.priority} dueDate={todo.dueDate}/>
+                <GridListTile key={i}>
+                    <Todo key={i} text={todo.description} name={todo.responsable.name} status={todo.status} dueDate={todo.dueDate}/>
+                </GridListTile>
             );
         });
 
         return (
-            <table>
-                <thead>
-                <tr>
-                    <th>Task</th>
-                    <th>Priority</th>
-                    <th>Due Date</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div className="root">
+                <GridList cellHeight={160} className="gridList" cols={3}>
                 {todoList}
-                </tbody>
-            </table>
+                </GridList>
+            </div>
         );
 
 

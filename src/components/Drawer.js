@@ -17,6 +17,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Cards from './Cards';
 
 
@@ -133,43 +136,21 @@ class Drawers extends React.Component {
             </IconButton>
           </div>
           <Divider />
-          <List>
-            <ListItem>
-              <ListItemIcon>
-                <ListItemText primary={localStorage.getItem("email")} >
-                  </ListItemText> 
-              </ListItemIcon>
-            </ListItem>
-          </List>
+          <AccountBoxIcon className={classes.user} />
+          <h3> {localStorage.getItem("name")}</h3>
+          <h3> {localStorage.getItem("email")}</h3>
 
           <Divider />
-          <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
+          <IconButton color="inherit" href="/userProfile">
+          Update profile
+          <EditTwoToneIcon />
+        </IconButton>
         </Drawer>
         <main
           className={clsx(classes.content, {
             [classes.contentShift]: this.state.status,
           })}
         >
-          <div className={classes.drawerHeader} />
-            <Cards titulo={"Implement Login view"} stade = {"In Progress"}/>
-            <Cards titulo={"Implement Login controler"} stade = {"Ready"}/>
-            <Cards titulo={"Facebook Integration"} stade = {"Completed"}/>
         </main>
       </div>
     );

@@ -8,16 +8,18 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import './Login.css';
+import './UserProfile.css';
 
 
-export class Login extends React.Component{
+export class UserProfile extends React.Component{
     constructor(props) {
         super(props);
-        this.state = {email:"",password:""};
+        this.state = {email:"",password:"",name:"",confirmPass:""};
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
+        this.handlePasswordConfirm = this.handlePasswordConfirm.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleName = this.handleName.bind(this);
     }
 
 
@@ -30,8 +32,12 @@ export class Login extends React.Component{
                         <Avatar className="avatar">
                             <LockIcon />
                         </Avatar>
-                        <Typography variant="h2">Sign in</Typography>
+                        <Typography variant="h2">Registration</Typography>
                         <form className="form" onSubmit={this.handleSubmit}>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="fullName">Full Name</InputLabel>
+                                <Input id="fullName" name="fullName" onChange={this.handleName} autoComplete="fullName" autoFocus />
+                            </FormControl>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="email">Email Address</InputLabel>
                                 <Input id="email" name="email" onChange={this.handleEmail} autoComplete="email" autoFocus />
@@ -46,6 +52,16 @@ export class Login extends React.Component{
                                     autoComplete="current-password"
                                 />
                             </FormControl>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="password">Confirm Password</InputLabel>
+                                <Input
+                                    name="passwordConfirm"
+                                    type="password"
+                                    id="passwordConfirm"
+                                    onChange={this.handlePasswordConfirm}
+                                    autoComplete="current-password"
+                                />
+                            </FormControl>
                             <Button
                                 type="submit"
                                 fullWidth
@@ -53,7 +69,7 @@ export class Login extends React.Component{
                                 color="primary"
                                 className="submit"
                             >
-                                Sign in
+                                Save
                             </Button>
                         </form>
                     </Paper>
@@ -62,6 +78,11 @@ export class Login extends React.Component{
         );
     }
 
+    handleName(e) {
+        this.setState({
+            name: e.target.value
+        });
+    }
     handleEmail(e) {
         this.setState({
             email: e.target.value
@@ -72,24 +93,25 @@ export class Login extends React.Component{
             password: e.target.value
         });
     }
+    handlePasswordConfirm(e) {
+        this.setState({
+            passwordConfirm: e.target.value
+        });
+    }
     handleSubmit(e) {
-        const email = "carlos@mail.com";
-        const password = "carlos";
         e.preventDefault();
-
-        if (localStorage.getItem("email") === null || localStorage.getItem("password") === null) {
-            if (this.state.email !== email || this.state.password !== password) {
-                alert("Correo o password incorrecto");
-                return;
-            }
-        } else if( localStorage.getItem("email") !== this.state.email || localStorage.getItem("password") !== this.state.password){
-            alert("Correo o password incorrecto");
+        if(this.state.password !== this.state.passwordConfirm){
+            alert("Las contraseñas ingresadas no coinciden.");
             return;
-        } 
-        localStorage.setItem('email', this.state.email);
-        localStorage.getItem('password',  this.state.password);
-        localStorage.setItem('isLoggedIn', true);
-        this.props.login();
-        document.location.href = "/home";
+        }if (!this.state.email.length ||!this.state.password.length ||!this.state.name.length ||!this.state.passwordConfirm.length) {
+            alert("Llene todos los campos");
+            return;
+        }else{
+            localStorage.setItem('email', this.state.email);
+            localStorage.setItem('name', this.state.name);
+            localStorage.setItem('password', this.state.password);
+            document.location.href = "/home";
+        }
+
     }
 }

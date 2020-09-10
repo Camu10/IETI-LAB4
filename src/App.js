@@ -9,14 +9,22 @@ import moment from "moment";
 import {Login} from './components/Login';
 import Drawer from './components/Drawer';
 import Cards from './components/Cards';
-import {BrowserRouter as Router, Link, Route, Redirect} from 'react-router-dom'
+import {BrowserRouter as Router, Link, Route, Redirect} from 'react-router-dom';
+import NewTask from './components/NewTask';
+import { Home } from "./components/Home";
+import { UserProfile } from "./components/UserProfile";
+
 
 class App extends Component {
 
     constructor(props) {
+    	const LoginView = () => (<Login login={this.handleIsLogin}/>);
+        const TodoAppView = () => (<Home />);
         super(props);
         this.state = {
-            isLoggedIn: false   
+        	LoginView: LoginView,
+      		TodoAppView: TodoAppView,
+            isLoggedIn: false  
         };
         this.handleIsLogin = this.handleIsLogin.bind(this);
     }
@@ -28,9 +36,9 @@ class App extends Component {
     }
 
     render() {
+        const newTask = () => <NewTask />;
+       	const userProfile = () => <UserProfile />
         
-        const LoginView = () => (<Login login={this.handleIsLogin}/>);
-        const TodoAppView = () => (<Drawer todo={<TodoApp/>}/>);
 
         var redirect;
         if(this.state.isLoggedIn === false && localStorage.getItem('isLoggedIn') === null){
@@ -47,9 +55,11 @@ class App extends Component {
                     </header>
 
                     <div>
-                        {redirect}
-                        <Route exact path="/" component={LoginView}/>
-                        <Route path="/todo" component={TodoAppView}/>
+                    	{}
+                        <Route exact path="/" component={this.state.LoginView}/>
+                        <Route path="/home" component={this.state.TodoAppView} />
+                        <Route path="/newTask" component={newTask}/>
+                        <Route path="/userProfile" component={userProfile}/>
                     </div>
                 </div>
             </Router>
