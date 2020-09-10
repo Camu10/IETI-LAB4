@@ -1,4 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+* `Usuario: ` carlos@mail.com
+* `Contraseña: ` carlos
+## Despliegue en Heroku
+Para ingresar a la aplicación web desde cualquier navegador puede hacerlo dando click [aqui](https://taskplannerpart2.herokuapp.com/)  
 
 ## Available Scripts
 
